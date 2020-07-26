@@ -25,6 +25,8 @@ class UpdatePeopleGroupIdToNullable extends Migration
      */
     public function down()
     {
-        // 
+        Schema::table('people', function (Blueprint $table) {
+            $table->unsignedBigInteger('group_id')->nullable()->change();
+        }); 
     }
 }

@@ -14,7 +14,7 @@ class UpdatePeopleTableForGroupFk extends Migration
     public function up()
     {
         Schema::table('people', function (Blueprint $table) {
-            $table->unsignedBigInteger('group_id');
+            $table->unsignedBigInteger('group_id')->nullable();
         
             $table->foreign('group_id')->references('id')->on('groups');
         });

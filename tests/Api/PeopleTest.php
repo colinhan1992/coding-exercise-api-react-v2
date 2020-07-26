@@ -40,7 +40,8 @@ class PeopleControllerTest extends TestCase
                     'email_address',
                     'status',
                     'created_at',
-                    'updated_at'
+                    'updated_at',
+                    'group_id'
                 ]
             ]);
     }
