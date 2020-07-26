@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
-import { Container, Header } from 'semantic-ui-react';
+import { Container, Header, Button } from 'semantic-ui-react';
 
 import ResultsList from './ResultsList';
+import UploadButton from './UploadButton';
 
 const App = ({ children }) => {
     const [people, setPeople] = useState([]);
     const [groups, setGroups] = useState([]);
+    const [loading, setLoading] = useState(false);
 
+    // Load People and Groups on Startup
     useEffect(() => {
         fetch('http://localhost:8000/api/people')
             .then(response => response.json())
@@ -26,7 +29,14 @@ const App = ({ children }) => {
                 </span>{' '}
                 Breeze Church Management{' '}
             </Header>
-
+            <UploadButton
+                people={people}
+                groups={groups}
+                loading={loading}
+                setLoading={setLoading}
+                setPeople={setPeople}
+                setGroups={setGroups}
+            />
             <ResultsList people={people} groups={groups} />
         </Container>
     );
