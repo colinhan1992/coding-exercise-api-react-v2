@@ -1,6 +1,6 @@
 # Coding Exercise
 
-Hello, _______________!
+Hello, Colin Han!
 
 Below is a coding exercise that we believe will allow you to show off your amazing development skills!
 
@@ -21,10 +21,10 @@ In this problem we're only going to consider two data types: People and Groups. 
 For the People data type, each person can have a state of either 'active' or ‘archived’. The `id` for each data type is globally unique. As a result, if the id does not exist, create a new record, otherwise, update the existing record.
 
 People columns:
-  `id, first_name, last_name, email_address, status`
+`id, first_name, last_name, email_address, status`
 
 Group columns:
-  `id, group_name`
+`id, group_name`
 
 Here’s an example:
 
@@ -46,31 +46,31 @@ id, group_name
 
 ### Exercise Setup Help
 
-*Help getting the code up and running:*
+_Help getting the code up and running:_
 
 **Prerequisites**
-* Git, Composer, Laravel
-* Node >= 8, Yarn
-* Command Line PHP 7
-* MySql 5.x installed locally, accessible via 127.0.0.1
 
-- Clone the repository
-  - `git clone git@github.com:BreezeChMS/coding-exercise-api-react.git && cd coding-exercise-api-react`
-- Setup Laravel
-  - `cp .env.example .env`
-  - Edit .env with your mysql connection information: the following steps connect to local mysql database using root credentials
-  - `composer install && php artisan key:generate && php artisan migrate`
-- Setup React
-  - `yarn`
-- Start the Laravel API in one Terminal Window: `php artisan serve`
-- Start the React/Node.js server in another Terminal Window: `yarn start`
+-   Git, Composer, Laravel
+-   Node >= 8, Yarn
+-   Command Line PHP 7
+-   MySql 5.x installed locally, accessible via 127.0.0.1
 
+*   Clone the repository
+    -   `git clone git@github.com:BreezeChMS/coding-exercise-api-react.git && cd coding-exercise-api-react`
+*   Setup Laravel
+    -   `cp .env.example .env`
+    -   Edit .env with your mysql connection information: the following steps connect to local mysql database using root credentials
+    -   `composer install && php artisan key:generate && php artisan migrate`
+*   Setup React
+    -   `yarn`
+*   Start the Laravel API in one Terminal Window: `php artisan serve`
+*   Start the React/Node.js server in another Terminal Window: `yarn start`
 
 ### Expected Changes
 
 Update this RESTful API (built using the Laravel framework) to add a _new_ endpoint for `/groups`. This endpoint should support CRUD (Create, Read, Update, Delete) operations.
 
-Update the ReactJS  application to receive an uploaded People CSV file, import it using the RESTful API service and display the results on the screen. The same application will allow you to do the same thing for a Group CSV file.
+Update the ReactJS application to receive an uploaded People CSV file, import it using the RESTful API service and display the results on the screen. The same application will allow you to do the same thing for a Group CSV file.
 
 Feel free to use a CSV parsing library.
 
