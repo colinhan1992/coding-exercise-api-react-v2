@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
+use Illuminate\Support\Facades\Log;
+
 use App\Http\Resources\PeopleCollection;
 use App\Http\Resources\PersonResource;
 use App\Models\Person;
+use App\Models\Group;
 
 class PeopleController extends Controller
 {
@@ -43,7 +46,8 @@ class PeopleController extends Controller
             'first_name'    => 'required|max:255',
             'last_name'     => 'required|max:255',
             'email_address' => 'required|email',
-            'status'        => Rule::in(['active', 'archived'])
+            'status'        => Rule::in(['active', 'archived']),
+            'group_id'      => Rule::in(Group::all()->pluck('id')->toArray()),
         ]);
 
         $person = Person::create($request->all());
