@@ -50,7 +50,7 @@ const App = () => {
                 loadData={loadData}
                 showAlert={showAlert}
             />
-            <ResultsList people={people} groups={groups} />
+            <ResultsList key={groups.length} people={people} groups={groups} />
         </Container>
     );
 };
