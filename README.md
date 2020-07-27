@@ -2,26 +2,21 @@
 
 Hello, Colin Han!
 
-Below is a coding exercise that we believe will allow you to show off your amazing development skills!
+Below is a my completed coding exercise that I believe adequately shows off my development skills.
 
-We’re super excited to see what you come up with!
+It took me longer than I anticipated but I viewed it as a valuable learning experience and really tried to give it my best. I had a really exciting conversation with Janet about Breeze so I tried to make sure I did a thorough job.
 
-We expect it to take a few hours. We would ask that you make commits to a git repository every so often so that we can see how long it took. Here is what you need to do
-
-1. Clone this repository locally and update the first line of this README with your name (so that it reads "Hello, YOUR NAME!"). Commit this change. This will serve as a starting timestamp
-2. Complete the exercise below
-3. Commit progress regularly
-4. When you're done, upload your code to a personal GitHub account and email us the link.
-
-## The Exercise
+## The Exercise _(Modified)_
 
 This is a simplified version of a piece of functionality we have in Breeze ChMS. Many of the churches we work with import their data from an existing system or a homegrown spreadsheet into Breeze. We provide tools for bulk importing of people, contribution, group and attendance records.
 In this problem we're only going to consider two data types: People and Groups. A Person can be part of one Group.
 
 For the People data type, each person can have a state of either 'active' or ‘archived’. The `id` for each data type is globally unique. As a result, if the id does not exist, create a new record, otherwise, update the existing record.
 
+_Note: A foreign key `group_id` has been added to the `people` table_
+
 People columns:
-`id, first_name, last_name, email_address, status`
+`id, first_name, last_name, email_address, status, group_id`
 
 Group columns:
 `id, group_name`
@@ -29,12 +24,12 @@ Group columns:
 Here’s an example:
 
 ```
-id, first_name, last_name, email_address, status
-1, "Alex", "Ortiz-Rosado", "alex@breezechms.com", active
-2, "Jon", "VerLee", "jon@breezechms.com", "archived"
-3, "Fred", "Flintstone", "fredflintstone@example.com", "active"
-4, "Marie", "Bourne", "mbourne@example.com", "active"
-5, "Wilma", "Flintstone", "wilmaflinstone@example.com", "active"
+id, first_name, last_name, email_address, status, group_id
+1, "Alex", "Ortiz-Rosado", "alex@breezechms.com", active, 1
+2, "Jon", "VerLee", "jon@breezechms.com", "archived", 2
+3, "Fred", "Flintstone", "fredflintstone@example.com", "active", 1
+4, "Marie", "Bourne", "mbourne@example.com", "active", 2
+5, "Wilma", "Flintstone", "wilmaflinstone@example.com", "active", 1
 ```
 
 ```
@@ -44,9 +39,7 @@ id, group_name
 3, "Bible Study"
 ```
 
-### Exercise Setup Help
-
-_Help getting the code up and running:_
+### Instructions for deployment
 
 **Prerequisites**
 
@@ -56,36 +49,41 @@ _Help getting the code up and running:_
 -   MySql 5.x installed locally, accessible via 127.0.0.1
 
 *   Clone the repository
-    -   `git clone git@github.com:BreezeChMS/coding-exercise-api-react.git && cd coding-exercise-api-react`
+    -   `https://github.com/colinhan1992/coding-exercise-api-react-v2.git && cd coding-exercise-api-react-v2`
 *   Setup Laravel
     -   `cp .env.example .env`
-    -   Edit .env with your mysql connection information: the following steps connect to local mysql database using root credentials
-    -   `composer install && php artisan key:generate && php artisan migrate`
+    -   Edit .env with your mysql connection information
+    -   Install dependencies `composer install`
+    -   `php artisan key:generate && php artisan migrate`
 *   Setup React
-    -   `yarn`
+    -   Install dependencies `yarn`
 *   Start the Laravel API in one Terminal Window: `php artisan serve`
 *   Start the React/Node.js server in another Terminal Window: `yarn start`
 
-### Expected Changes
+### Instructions for testing
 
-Update this RESTful API (built using the Laravel framework) to add a _new_ endpoint for `/groups`. This endpoint should support CRUD (Create, Read, Update, Delete) operations.
+-   Laravel Testing w/PHPUnit
+    -   Run the API tests using the Laravel test runner `php artisan test`
+-   React Testing w/Enzyme and Jest
+    -   Run the React unit tests `yarn test`
 
-Update the ReactJS application to receive an uploaded People CSV file, import it using the RESTful API service and display the results on the screen. The same application will allow you to do the same thing for a Group CSV file.
+### Exercise Changes
 
-Feel free to use a CSV parsing library.
+A new API endpoint has been added for `/groups` which supports all CRUD operations
 
-The data will be displayed in a sortable table.
+The ReactJS app has been updated to allow a user to upload a CSV file and import the data.
 
-You will need to determine the type of data in the CSV file based on the headers in the first row. Your program will output a list of Groups, and for each Group, a list of active People in that Group.
+-   The application validates the CSV's structure based on the first line of headers and if it matches a the expected structure of a group or people CSV it imports the data
+-   The Application first checks if a user or group exists of the given id and if so, updates that user. Otherwise it creates a new record using the API endpoints
 
-### Testing
-
-We love TDD! So we’d love to see tests for the API and ReactJS application. Write automated tests to verify your results and account for gotchas (handling different column orders, invalid id's in the People CSV file, etc..). Classify your tests as either unit, integration, ui, or acceptance, but it is not required to use every type.
-
-UI tests can be run with `yarn test`
+The ReactJS app's UI has been updated to display a list(sortable) of groups and for each group that has active members, a table(sortable) of those members.
 
 ## Finally
 
 We’re a fully remote team so communication is really important. Be sure to include any instructions needed for any of our team mates to run and test.
 
 Good luck and we'll get back to you once we review it!
+
+```
+
+```
