@@ -48,7 +48,9 @@ class ResultsList extends Component {
     };
 
     getGroupMembers(groupID) {
-        const members = this.props.people.filter(e => e.group_id === groupID);
+        const members = this.props.people.filter(
+            e => e.group_id === groupID && e.status === 'active'
+        );
         return members.length;
     }
 
@@ -57,7 +59,11 @@ class ResultsList extends Component {
         const { data, column, direction } = this.state;
 
         const groupsWithMembers = groups.filter(function(group) {
-            return people.find(p => p.group_id === group.id) !== undefined;
+            return (
+                people.find(
+                    p => p.group_id === group.id && p.status === 'active'
+                ) !== undefined
+            );
         });
 
         return (
@@ -78,7 +84,7 @@ class ResultsList extends Component {
                                 sorted={column === 'members' ? direction : null}
                                 onClick={this.handleSort('members')}
                             >
-                                Members
+                                Active Members
                             </Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
@@ -104,7 +110,9 @@ class ResultsList extends Component {
                             key={index}
                             group={group}
                             members={people.filter(
-                                p => p.group_id === group.id
+                                p =>
+                                    p.group_id === group.id &&
+                                    p.status === 'active'
                             )}
                         />
                     );
