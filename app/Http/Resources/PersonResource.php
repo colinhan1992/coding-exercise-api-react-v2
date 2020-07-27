@@ -14,7 +14,7 @@ class PersonResource extends JsonResource
      */
      public function toArray($request)
  {
-     return [
+    return [
          'id'            => $this->id,
          'first_name'    => $this->first_name,
          'last_name'     => $this->last_name,
@@ -22,6 +22,7 @@ class PersonResource extends JsonResource
          'status'        => $this->status,
          'created_at'    => $this->created_at,
          'updated_at'    => $this->updated_at,
+         'group_id'      => $this->group_id,
      ];
  }
 }

@@ -1,0 +1,7 @@
+id,first_name,last_name,email_address,status,group_id
+1,Quinn,Varlow,qvarlow0@mozilla.org,active,1
+2,Florian,Leve,fleve1@mtv.com,active,1
+3,Peyton,McDade,pmcdade2@stanford.edu,active,2
+4,Darren,Solomonides,dsolomonides3@phpbb.com,archived,2
+5,Karry,Shekle,kshekle4@rambler.ru,active,3
+
