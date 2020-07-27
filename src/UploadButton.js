@@ -1,4 +1,4 @@
-import React, { Fragment, useRef, useState } from 'react';
+import React, { Fragment, useRef } from 'react';
 import { Button } from 'semantic-ui-react';
 import Papa from 'papaparse';
 import axios from 'axios';
@@ -164,7 +164,7 @@ const UploadButton = ({ loading, setLoading, loadData, showAlert }) => {
         for (let i in array1) {
             if (
                 !array2.includes(array1[i]) ||
-                array2.findIndex(e => e === array1[i]) != i
+                array2.findIndex(e => e === array1[i]) !== i
             )
                 equal = false;
         }

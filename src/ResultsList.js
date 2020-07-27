@@ -21,48 +21,12 @@ class ResultsList extends Component {
     render() {
         const { groups, people } = this.props;
 
+        const groupsWithMembers = groups.filter(function(group) {
+            return people.find(p => p.group_id === group.id) !== undefined;
+        });
+
         return (
             <Fragment>
-                <h3>People</h3>
-                <Table celled padded>
-                    <Table.Header>
-                        <Table.Row>
-                            <Table.HeaderCell singleLine>
-                                First Name
-                            </Table.HeaderCell>
-                            <Table.HeaderCell>Last Name</Table.HeaderCell>
-                            <Table.HeaderCell>Email</Table.HeaderCell>
-                            <Table.HeaderCell>Status</Table.HeaderCell>
-                            <Table.HeaderCell>Group</Table.HeaderCell>
-                        </Table.Row>
-                    </Table.Header>
-
-                    <Table.Body>
-                        {people.map((person, index) => {
-                            return (
-                                <Table.Row key={index}>
-                                    <Table.Cell singleLine>
-                                        {person.first_name}
-                                    </Table.Cell>
-                                    <Table.Cell singleLine>
-                                        {person.last_name}
-                                    </Table.Cell>
-                                    <Table.Cell singleLine>
-                                        {person.email_address}
-                                    </Table.Cell>
-                                    <Table.Cell singleLine>
-                                        {person.status}
-                                    </Table.Cell>
-                                    <Table.Cell singleLine>
-                                        {person.group_id != null
-                                            ? this.getGroupName(person.group_id)
-                                            : 'N/A'}
-                                    </Table.Cell>
-                                </Table.Row>
-                            );
-                        })}
-                    </Table.Body>
-                </Table>
                 <h3>Groups</h3>
                 <Table celled padded>
                     <Table.Header>
@@ -89,6 +53,64 @@ class ResultsList extends Component {
                         })}
                     </Table.Body>
                 </Table>
+                {groupsWithMembers.map((group, index) => {
+                    return (
+                        <Fragment key={index}>
+                            <h3>{group.group_name}</h3>
+                            <Table celled padded>
+                                <Table.Header>
+                                    <Table.Row>
+                                        <Table.HeaderCell singleLine>
+                                            First Name
+                                        </Table.HeaderCell>
+                                        <Table.HeaderCell>
+                                            Last Name
+                                        </Table.HeaderCell>
+                                        <Table.HeaderCell>
+                                            Email
+                                        </Table.HeaderCell>
+                                        <Table.HeaderCell>
+                                            Status
+                                        </Table.HeaderCell>
+                                        <Table.HeaderCell>
+                                            Group
+                                        </Table.HeaderCell>
+                                    </Table.Row>
+                                </Table.Header>
+
+                                <Table.Body>
+                                    {people
+                                        .filter(p => p.group_id === group.id)
+                                        .map((person, index) => {
+                                            return (
+                                                <Table.Row key={index}>
+                                                    <Table.Cell singleLine>
+                                                        {person.first_name}
+                                                    </Table.Cell>
+                                                    <Table.Cell singleLine>
+                                                        {person.last_name}
+                                                    </Table.Cell>
+                                                    <Table.Cell singleLine>
+                                                        {person.email_address}
+                                                    </Table.Cell>
+                                                    <Table.Cell singleLine>
+                                                        {person.status}
+                                                    </Table.Cell>
+                                                    <Table.Cell singleLine>
+                                                        {person.group_id != null
+                                                            ? this.getGroupName(
+                                                                  person.group_id
+                                                              )
+                                                            : 'N/A'}
+                                                    </Table.Cell>
+                                                </Table.Row>
+                                            );
+                                        })}
+                                </Table.Body>
+                            </Table>
+                        </Fragment>
+                    );
+                })}
             </Fragment>
         );
     }
