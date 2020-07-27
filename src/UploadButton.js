@@ -95,10 +95,8 @@ const UploadButton = ({ loading, setLoading, loadData }) => {
             setLoading(false);
             responseCount = 0;
             loadData();
-            console.log('here');
         } else {
             responseCount++;
-            console.log(responseCount);
         }
     };
 
@@ -120,17 +118,41 @@ const UploadButton = ({ loading, setLoading, loadData }) => {
             });
     };
 
-    const createGroup = (group, groups) => {};
+    const createGroup = (group, groups) => {
+        const groupObj = {
+            group_name: group[1]
+        };
+        axios
+            .post('http://localhost:8000/api/groups', groupObj)
+            .then(response => {
+                checkResponseCount(groups);
+            })
+            .catch(e => {
+                checkResponseCount(groups);
+            });
+    };
 
-    const updateGroup = (group, groups) => {};
+    const updateGroup = (group, groups) => {
+        const groupObj = {
+            group_name: group[1]
+        };
+        axios
+            .put(`http://localhost:8000/api/groups/${group[0]}`, groupObj)
+            .then(response => {
+                checkResponseCount(groups);
+            })
+            .catch(e => {
+                checkResponseCount(groups);
+            });
+    };
 
     const compareArray = (array1, array2) => {
         var equal = array1.length === array2.length;
         // Check if the structure and indexes are the same
         for (let i in array1) {
             if (
-                !array2.includes(array1[i]) &&
-                array2.findIndex(array1[i]) === i
+                !array2.includes(array1[i]) ||
+                array2.findIndex(e => e === array1[i]) != i
             )
                 equal = false;
         }
