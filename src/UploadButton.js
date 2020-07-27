@@ -3,10 +3,11 @@ import { Button } from 'semantic-ui-react';
 import Papa from 'papaparse';
 import axios from 'axios';
 
-const UploadButton = ({ loading, setLoading, loadData }) => {
+const UploadButton = ({ loading, setLoading, loadData, showAlert }) => {
     const peopleInputRef = useRef();
 
     let responseCount = 0;
+    let errors = [];
 
     // Parse People CSV
     const parsePeopleCSV = () => {
@@ -15,8 +16,10 @@ const UploadButton = ({ loading, setLoading, loadData }) => {
     };
 
     const uploadPeopleCSV = (results, file) => {
+        document.getElementById('people-csv').value = null;
         setLoading(true);
         responseCount = 0;
+        errors = [];
         console.log('Parsing complete:', results, file);
         const expectedPersonStructure = [
             'id',
@@ -44,6 +47,7 @@ const UploadButton = ({ loading, setLoading, loadData }) => {
                             createPerson(person, people);
                         } else {
                             // Error
+                            errors.push(person);
                         }
                     });
             });
@@ -64,11 +68,14 @@ const UploadButton = ({ loading, setLoading, loadData }) => {
                             createGroup(group, groups);
                         } else {
                             // Error
+                            errors.push(group);
                         }
                     });
             });
         } else {
             // Invalid CSV
+            setLoading(false);
+            showAlert('The CSV file has an invalid structure.');
         }
     };
 
@@ -87,17 +94,8 @@ const UploadButton = ({ loading, setLoading, loadData }) => {
             })
             .catch(e => {
                 checkResponseCount(people);
+                errors.push(person);
             });
-    };
-
-    const checkResponseCount = people => {
-        if (responseCount === people.length - 1) {
-            setLoading(false);
-            responseCount = 0;
-            loadData();
-        } else {
-            responseCount++;
-        }
     };
 
     const updatePerson = (person, people) => {
@@ -144,6 +142,20 @@ const UploadButton = ({ loading, setLoading, loadData }) => {
             .catch(e => {
                 checkResponseCount(groups);
             });
+    };
+
+    const checkResponseCount = people => {
+        if (responseCount === people.length - 1) {
+            setLoading(false);
+            responseCount = 0;
+            if (errors.length > 0) {
+                showAlert('One or more of the CSV rows could not be added');
+            }
+            errors = [];
+            loadData();
+        } else {
+            responseCount++;
+        }
     };
 
     const compareArray = (array1, array2) => {

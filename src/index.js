@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import { Container, Header } from 'semantic-ui-react';
+import { Container, Header, Message } from 'semantic-ui-react';
 
 import ResultsList from './ResultsList';
 import UploadButton from './UploadButton';
@@ -9,6 +9,7 @@ const App = () => {
     const [people, setPeople] = useState([]);
     const [groups, setGroups] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [alert, setAlert] = useState(null);
 
     // Load People and Groups on Startup
     useEffect(() => {
@@ -25,6 +26,13 @@ const App = () => {
             .then(data => setGroups(data.data));
     };
 
+    const showAlert = msg => {
+        setAlert(msg);
+        setTimeout(() => {
+            setAlert(null);
+        }, 8000);
+    };
+
     return (
         <Container style={{ margin: 20 }}>
             <Header as="h3">
@@ -33,10 +41,14 @@ const App = () => {
                 </span>{' '}
                 Breeze Church Management{' '}
             </Header>
+            <Message warning hidden={alert === null}>
+                <p>{alert}</p>
+            </Message>
             <UploadButton
                 loading={loading}
                 setLoading={setLoading}
                 loadData={loadData}
+                showAlert={showAlert}
             />
             <ResultsList people={people} groups={groups} />
         </Container>
