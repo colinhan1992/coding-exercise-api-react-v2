@@ -10,12 +10,6 @@ class ResultsList extends Component {
         people: PropTypes.array.isRequired
     };
 
-    state = {
-        column: null,
-        data: null,
-        direction: null
-    };
-
     getGroupName = groupID => {
         const group = this.props.groups.find(e => e.id === groupID);
         return group ? group.group_name : 'N/A';
@@ -39,9 +33,7 @@ class ResultsList extends Component {
                 <Table sortable celled padded>
                     <Table.Header>
                         <Table.Row>
-                            <Table.HeaderCell singleLine>
-                                First Name
-                            </Table.HeaderCell>
+                            <Table.HeaderCell>Group Name</Table.HeaderCell>
                             <Table.HeaderCell>Members</Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
@@ -66,7 +58,9 @@ class ResultsList extends Component {
                         <GroupMembers
                             key={index}
                             group={group}
-                            people={people}
+                            members={people.filter(
+                                p => p.group_id === group.id
+                            )}
                             getGroupName={this.getGroupName}
                         />
                     );

@@ -6,6 +6,7 @@
         "axios": "^0.19.2",
         "enzyme": "^3.11.0",
         "enzyme-adapter-react-16": "^1.15.2",
+        "lodash": "^4.17.19",
         "papaparse": "^5.2.0",
         "react": "^16.13.1",
         "react-dom": "^16.13.1",
