@@ -3,6 +3,18 @@ import { Button } from 'semantic-ui-react';
 import Papa from 'papaparse';
 import axios from 'axios';
 
+/**
+ * The upload is implemented so that the application first checks if each group or user exists in the database
+ * If so, the it hits the API's "update" endpoint otherwise it hits the "create" endpoint
+ *
+ * This makes it so that even if a few of the csv rows are invalid for some reason the whole thing doesn't fail.
+ *  (If we wanted the whole thing to rollback on any failure this would need to be done on the API using a transaction)
+
+ * The downside of this is that the app makes two requests for each row of data in the CSV file so it takes quite a bit of network traffic to do for big files. 
+ * An alternative would be to POST all the parsed CSV data to a new API route and have the API handle all of the "create"/"update" logic
+ *
+ */
+
 const UploadButton = ({ loading, setLoading, loadData, showAlert }) => {
     const peopleInputRef = useRef();
 
@@ -10,12 +22,12 @@ const UploadButton = ({ loading, setLoading, loadData, showAlert }) => {
     let errors = [];
 
     // Parse People CSV
-    const parsePeopleCSV = () => {
+    const parseCSV = () => {
         const file = document.getElementById('people-csv').files[0];
-        Papa.parse(file, { complete: uploadPeopleCSV });
+        Papa.parse(file, { complete: uploadCSV });
     };
 
-    const uploadPeopleCSV = (results, file) => {
+    const uploadCSV = (results, file) => {
         document.getElementById('people-csv').value = null;
         setLoading(true);
         responseCount = 0;
@@ -150,6 +162,7 @@ const UploadButton = ({ loading, setLoading, loadData, showAlert }) => {
             responseCount = 0;
             if (errors.length > 0) {
                 showAlert('One or more of the CSV rows could not be added');
+                console.log(errors); // with more time we could display errors to the user so they can see which people/groups failed to be stored
             }
             errors = [];
             loadData();
@@ -164,7 +177,7 @@ const UploadButton = ({ loading, setLoading, loadData, showAlert }) => {
         for (let i in array1) {
             if (
                 !array2.includes(array1[i]) ||
-                array2.findIndex(e => e === array1[i]) !== i
+                array2.findIndex(e => e === array1[i]) != i
             )
                 equal = false;
         }
@@ -187,7 +200,7 @@ const UploadButton = ({ loading, setLoading, loadData, showAlert }) => {
                     ref={peopleInputRef}
                     type="file"
                     hidden
-                    onChange={parsePeopleCSV}
+                    onChange={parseCSV}
                 />
             </Fragment>
         </div>
