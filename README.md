@@ -1,10 +1,8 @@
 # Coding Exercise
 
-Hello, Colin Han!
+Hello, I'm Colin Han!
 
 Below is a my completed coding exercise that I believe adequately shows off my development skills.
-
-It took me longer than I anticipated but I viewed it as a valuable learning experience and really tried to give it my best. I had a really exciting conversation with Janet about Breeze so I tried to make sure I did a thorough job.
 
 ## The Exercise _(Modified)_
 
@@ -60,12 +58,21 @@ id, group_name
 *   Start the Laravel API in one Terminal Window: `php artisan serve`
 *   Start the React/Node.js server in another Terminal Window: `yarn start`
 
+### Importing Data
+
+The project files include two mock CSV files which can be used to test the application.
+
+-   `MOCK_DATA_GROUPS`
+-   `MOCK_DATA_PEOPLE`
+
 ### Instructions for testing
 
 -   Laravel Testing w/PHPUnit
     -   Run the API tests using the Laravel test runner `php artisan test`
 -   React Testing w/Enzyme and Jest
     -   Run the React unit tests `yarn test`
+
+Caveat: I will say that I don't have much experiece with testing using Jest/Enzyme so those tests are rather limited
 
 ### Exercise Changes
 
@@ -80,9 +87,11 @@ The ReactJS app's UI has been updated to display a list(sortable) of groups and 
 
 ## Finally
 
-We’re a fully remote team so communication is really important. Be sure to include any instructions needed for any of our team mates to run and test.
+Overall, this took me longer than I anticipated. Especially the parts with REACT since I'm currently in the process of getting to know it better. But, I viewed it as a valuable learning experience and really tried to give it my best.
 
-Good luck and we'll get back to you once we review it!
+Earlier, I had a really inspiring conversation with Janet about BreezeCMS and I think that my skills and attitude would be a great fit.
+
+I look forward to hearing back!
 
 ```
 
