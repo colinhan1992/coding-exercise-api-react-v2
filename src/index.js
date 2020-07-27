@@ -1,17 +1,21 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import { Container, Header, Button } from 'semantic-ui-react';
+import { Container, Header } from 'semantic-ui-react';
 
 import ResultsList from './ResultsList';
 import UploadButton from './UploadButton';
 
-const App = ({ children }) => {
+const App = () => {
     const [people, setPeople] = useState([]);
     const [groups, setGroups] = useState([]);
     const [loading, setLoading] = useState(false);
 
     // Load People and Groups on Startup
     useEffect(() => {
+        loadData();
+    }, []);
+
+    const loadData = () => {
         fetch('http://localhost:8000/api/people')
             .then(response => response.json())
             .then(data => setPeople(data.data));
@@ -19,7 +23,7 @@ const App = ({ children }) => {
         fetch('http://localhost:8000/api/groups')
             .then(response => response.json())
             .then(data => setGroups(data.data));
-    }, []);
+    };
 
     return (
         <Container style={{ margin: 20 }}>
@@ -30,12 +34,9 @@ const App = ({ children }) => {
                 Breeze Church Management{' '}
             </Header>
             <UploadButton
-                people={people}
-                groups={groups}
                 loading={loading}
                 setLoading={setLoading}
-                setPeople={setPeople}
-                setGroups={setGroups}
+                loadData={loadData}
             />
             <ResultsList people={people} groups={groups} />
         </Container>

@@ -1,17 +1,12 @@
-import React, { Fragment, useRef } from 'react';
+import React, { Fragment, useRef, useState } from 'react';
 import { Button } from 'semantic-ui-react';
 import Papa from 'papaparse';
 import axios from 'axios';
 
-const UploadButton = ({
-    people,
-    groups,
-    setPeople,
-    setGroups,
-    loading,
-    setLoading
-}) => {
+const UploadButton = ({ loading, setLoading, loadData }) => {
     const peopleInputRef = useRef();
+
+    let responseCount = 0;
 
     // Parse People CSV
     const parsePeopleCSV = () => {
@@ -21,12 +16,13 @@ const UploadButton = ({
 
     const uploadPeopleCSV = (results, file) => {
         setLoading(true);
+        responseCount = 0;
         console.log('Parsing complete:', results, file);
         const expectedPersonStructure = [
             'id',
             'first_name',
             'last_name',
-            'email',
+            'email_address',
             'status',
             'group_id'
         ];
@@ -37,15 +33,15 @@ const UploadButton = ({
             people.forEach(person => {
                 // See if there is an existing person
                 axios
-                    .get(`/api/people/${person[0]}`)
+                    .get(`http://localhost:8000/api/people/${person[0]}`)
                     .then(response => {
                         // Person exists so we update the person
-                        updatePerson(person);
+                        updatePerson(person, people);
                     })
                     .catch(e => {
-                        if (e.status === 404) {
+                        if (e.response.status === 404) {
                             // Person is not found so we create a new person
-                            createPerson(person);
+                            createPerson(person, people);
                         } else {
                             // Error
                         }
@@ -60,12 +56,12 @@ const UploadButton = ({
                     .get(`/api/groups/${group[0]}`)
                     .then(response => {
                         // Person exists so we update the group
-                        updatePerson(group);
+                        updateGroup(group, groups);
                     })
                     .catch(e => {
-                        if (e.status === 404) {
+                        if (e.response.status === 404) {
                             // Person is not found so we create a new group
-                            createPerson(group);
+                            createGroup(group, groups);
                         } else {
                             // Error
                         }
@@ -76,13 +72,57 @@ const UploadButton = ({
         }
     };
 
-    const createPerson = personArray => {};
+    const createPerson = (person, people) => {
+        const personObj = {
+            first_name: person[1],
+            last_name: person[2],
+            email_address: person[3],
+            status: person[4],
+            group_id: person[5]
+        };
+        axios
+            .post('http://localhost:8000/api/people', personObj)
+            .then(response => {
+                checkResponseCount(people);
+            })
+            .catch(e => {
+                checkResponseCount(people);
+            });
+    };
 
-    const updatePerson = personArray => {};
+    const checkResponseCount = people => {
+        if (responseCount === people.length - 1) {
+            setLoading(false);
+            responseCount = 0;
+            loadData();
+            console.log('here');
+        } else {
+            responseCount++;
+            console.log(responseCount);
+        }
+    };
 
-    const createGroup = personArray => {};
+    const updatePerson = (person, people) => {
+        const personObj = {
+            first_name: person[1],
+            last_name: person[2],
+            email_address: person[3],
+            status: person[4],
+            group_id: person[5]
+        };
+        axios
+            .put(`http://localhost:8000/api/people/${person[0]}`, personObj)
+            .then(response => {
+                checkResponseCount(people);
+            })
+            .catch(e => {
+                checkResponseCount(people);
+            });
+    };
 
-    const updateGroup = personArray => {};
+    const createGroup = (group, groups) => {};
+
+    const updateGroup = (group, groups) => {};
 
     const compareArray = (array1, array2) => {
         var equal = array1.length === array2.length;
