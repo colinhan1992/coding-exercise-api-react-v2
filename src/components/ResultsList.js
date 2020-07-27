@@ -7,8 +7,8 @@ import GroupMembers from './GroupMembers';
 
 class ResultsList extends Component {
     static propTypes = {
-        groups: PropTypes.array.isRequired,
-        people: PropTypes.array.isRequired
+        groups: PropTypes.array,
+        people: PropTypes.array
     };
 
     state = {
@@ -106,7 +106,6 @@ class ResultsList extends Component {
                             members={people.filter(
                                 p => p.group_id === group.id
                             )}
-                            getGroupName={this.getGroupName}
                         />
                     );
                 })}

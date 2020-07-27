@@ -29,7 +29,7 @@ export class GroupMembers extends Component {
     };
 
     render() {
-        const { group, getGroupName, members } = this.props;
+        const { group } = this.props;
         const { column, data, direction } = this.state;
         return (
             <Fragment>

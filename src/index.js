@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { Container, Header, Message } from 'semantic-ui-react';
 
-import ResultsList from './ResultsList';
-import UploadButton from './UploadButton';
+import ResultsList from './components/ResultsList';
+import UploadButton from './components/UploadButton';
 
 const App = () => {
     const [people, setPeople] = useState([]);
@@ -13,17 +13,19 @@ const App = () => {
 
     // Load People and Groups on Startup
     useEffect(() => {
+        setGroups([]);
+        setPeople([]);
         loadData();
     }, []);
 
     const loadData = () => {
         fetch('http://localhost:8000/api/people')
             .then(response => response.json())
-            .then(data => setPeople(data.data));
+            .then(data => setPeople(data.data ? data.data : []));
 
         fetch('http://localhost:8000/api/groups')
             .then(response => response.json())
-            .then(data => setGroups(data.data));
+            .then(data => setGroups(data.data ? data.data : []));
     };
 
     const showAlert = msg => {
